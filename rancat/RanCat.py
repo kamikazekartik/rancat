@@ -84,6 +84,16 @@ class RanCat(object):
 
         self.files[filepath] = Handler(original_filepath)
 
+        # we can calculate total possible combinations as soon as we
+        # load a new file
+        # Recalculate _total_combinations
+        self._total_combinations = 0
+        for file_path in self.files:
+            if self._total_combinations == 0:
+                self._total_combinations = len(self.files[filepath].current_lines)
+            else:
+                self._total_combinations *= len(self.files[filepath].current_lines)
+
         return self
 
     def soft_reset(self):
